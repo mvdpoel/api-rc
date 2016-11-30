@@ -109,7 +109,7 @@ class Controller extends BaseController
             // Return location of csv download in location response header
                 app('Dingo\Api\Routing\UrlGenerator')
                     ->version('v1')
-                    ->route(Str::plural(Str::lower(class_basename($this->oModel)), [$oModel->id]),
+                    ->route(Str::plural(Str::lower(class_basename($this->oModel))), [$oModel->id]),
                 // Output csv file body in response
                 file_get_contents(
                     CsvHelper::getCsvFilename($oModel->id, class_basename($this->oModel))
@@ -135,9 +135,13 @@ class Controller extends BaseController
         $sCsvFilename = CsvHelper::getCsvFilename($id, class_basename($this->oModel));
         if (!file_exists($sCsvFilename)) $this->response()->errorNotFound();
 
-        return response()->download($sCsvFilename);
+        return response()->make(file_get_contents($sCsvFilename), 200, [
+            'Content-Type' 		=> 'application/csv',
+            'Content-Description' 	=> 'File Transfer',
+	    'Content-Disposition'	=> 'attachment; filename=' . basename($sCsvFilename),
+            'Pragma' 			=> 'public'
+        ]);
     }
-
 
     /**
      * @param $sModelName
