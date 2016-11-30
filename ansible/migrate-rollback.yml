@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+
+    - name: migrate
+      shell: "docker exec {{ dockerContainerName }} /usr/bin/php -f /var/www/api-rc/app/artisan -- migrate:rollback"

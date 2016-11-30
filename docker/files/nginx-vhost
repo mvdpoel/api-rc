@@ -1,0 +1,38 @@
+server {
+   listen 80 default_server;
+
+   gzip_static on;
+
+   add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+   client_max_body_size 1024m;
+
+   server_name api-rc.vanderpoel.pro;
+   root /var/www/api-rc/app/public;
+   index index.php index.html index.htm;
+
+   access_log  /var/log/nginx/access.api-rc.log main;
+  
+   error_log  /var/log/nginx/error.api-rc.log warn;
+
+   location / {
+       try_files $uri $uri/ /index.php?$query_string;
+   }
+
+#   location /templates {
+#       deny all;
+#   }
+
+   location ~ \.php$ {
+       try_files $uri /index.php =404;
+       fastcgi_split_path_info ^(.+\.php)(/.+)$;
+       fastcgi_pass 127.0.0.1:9000;
+       fastcgi_index index.php;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+       fastcgi_param APP_ENV dev;
+       include fastcgi_params;
+       fastcgi_param HTTP_X_LOADBALANCER_IP $remote_addr;
+       fastcgi_param REMOTE_ADDR $http_x_cluster_client_ip;
+       fastcgi_param HTTP_X_FORWARDED_FOR $http_x_cluster_client_ip;
+   }
+
+}

@@ -1,0 +1,50 @@
+api:
+  build: .
+  hostname: "api-rc"
+  domainname: "vanderpoel.pro"
+  user: root
+  command: /sbin/my_init
+  links:
+    - db
+    - redis
+    - mailcatcher
+  ports:
+    - "8808:80"
+  privileged: true
+  volumes:
+    - "/Users/martin/Workspace/pullit/api-rc:/var/www/api-rc/app"
+  env_file: api.env
+  environment:
+    APP_ENV: 'local'
+    APP_HOST: 'api-rc.vanderpoel.pro'
+    APP_DEBUG: 'true'
+    APP_KEY: 'WYHXnZ3pkHco5MMcPsXFS1uPeBwY68Mn'
+
+db:
+  image: mariadb
+  hostname: "db.api-rc"
+  domainname: "vanderpoel.pro"
+  ports:
+    - "30399:3306"
+  env_file: api.env
+  environment:
+    MYSQL_ROOT_PASSWORD: "GWqMrrjfPbGF"
+    NAME: 'apirc'
+    USERNAME: 'apirc'
+    PASSWORD: 'apirc'
+
+redis:
+  hostname: "redis.api-rc"
+  domainname: "vanderpoel.pro"
+  image: redis
+  env_file: api.env
+
+mailcatcher:
+ image: schickling/mailcatcher
+ hostname: "mailcatcher.api-rc"
+ domainname: "vanderpoel.pro"
+ expose:
+   - 1025
+ ports:
+   - "10083:1080"
+ env_file: api.env
