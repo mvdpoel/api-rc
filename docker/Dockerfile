@@ -28,7 +28,7 @@ RUN /usr/bin/pecl install zip
 ADD files/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb /tmp/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb
 RUN gdebi -n /tmp/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb && \
     ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
-
+RUN apt-get install -y -f php5.6-xml
 RUN apt-get install -f && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN sed -i '/daemonize /c daemonize = no' /etc/php/5.6/fpm/php-fpm.conf && \

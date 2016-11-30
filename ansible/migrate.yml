@@ -7,4 +7,4 @@
     - include_vars: "vars.yml"
     
     - name: migrate
-      shell: "docker exec {{ dockerContainerName }} /usr/bin/php -f /var/www/api-rc/app/artisan -- migrate"
+      shell: "docker exec {{ dockerContainerName }} /usr/bin/php5.6 -f /var/www/api-rc/app/artisan -- migrate"
