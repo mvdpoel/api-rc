@@ -28,6 +28,7 @@ $oApi->version('v1', function(Dingo\Api\Routing\Router $oApi) {
         $oApi->get('campaigns/{id}/csv', \App\Http\Controllers\CampaignController::class . '@csv')->name('campaigns.csv');
         $oApi->resource('campaigns',    \App\Http\Controllers\CampaignController::class);
 
+        $oApi->get('customers/{id}/csv', \App\Http\Controllers\CustomerController::class . '@csv')->name('customers.csv');
         $oApi->resource('customers',    \App\Http\Controllers\CustomerController::class);
         $oApi->resource('users',        \App\Http\Controllers\UserController::class);
 

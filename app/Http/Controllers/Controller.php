@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Dingo\Api\Routing\Helpers;
 
 use Validator;
-use Str;
+
 use App\Helpers\CsvHelper;
 use League\Fractal\TransformerAbstract;
 
@@ -108,7 +109,7 @@ class Controller extends BaseController
             // Return location of csv download in location response header
                 app('Dingo\Api\Routing\UrlGenerator')
                     ->version('v1')
-                    ->route('campaigns.csv', [$oModel->id]),
+                    ->route(Str::plural(Str::lower(class_basename($this->oModel)), [$oModel->id]),
                 // Output csv file body in response
                 file_get_contents(
                     CsvHelper::getCsvFilename($oModel->id, class_basename($this->oModel))
