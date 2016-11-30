@@ -21,14 +21,14 @@ RUN export TERM=xterm && \
                           curl nmap git vim mysql-client nano joe \
                           php5.6 php5.6-fpm \
                           php5.6-mcrypt php5.6-curl php5.6-gd php5.6-intl php-soap php5.6-json php5.6-mysqlnd \
-                          xfonts-wqy apache2-utils php5-dev php5-xsl php5-tidy php-fpm5.6
+                          xfonts-wqy apache2-utils php5-dev php5-xsl php5-tidy
 
 RUN /usr/bin/pecl install zip
 
 ADD files/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb /tmp/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb
 RUN gdebi -n /tmp/wkhtmltox-0.12.2-7058a04_linux-wheezy-amd64.deb && \
     ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
-
+RUN apt-get install -y -f php5.6-xml
 RUN apt-get install -f && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN sed -i '/daemonize /c daemonize = no' /etc/php/5.6/fpm/php-fpm.conf && \
