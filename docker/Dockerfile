@@ -21,7 +21,7 @@ RUN export TERM=xterm && \
                           curl nmap git vim mysql-client nano joe \
                           php5.6 php5.6-fpm \
                           php5.6-mcrypt php5.6-curl php5.6-gd php5.6-intl php-soap php5.6-json php5.6-mysqlnd \
-                          xfonts-wqy apache2-utils php5-dev php5-xsl php5-tidy
+                          xfonts-wqy apache2-utils php5-dev php5-xsl php5-tidy php-fpm5.6
 
 RUN /usr/bin/pecl install zip
 

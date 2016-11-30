@@ -12,7 +12,7 @@ api:
     - "8808:80"
   privileged: true
   volumes:
-    - "/Users/martin/Workspace/pullit/api-rc:/var/www/api-rc/app"
+    - "/mnt/projects/api-rc:/var/www/api-rc/app"
   env_file: api.env
   environment:
     APP_ENV: 'local'
